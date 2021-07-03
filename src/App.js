@@ -1,67 +1,39 @@
-import React,{ useState, useEffect } from 'react';
-import styled, { createGlobalStyle } from "styled-components";
-import axios from "axios";
+import React,{ useState } from 'react';
 
-function App() {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    axios
-      .get("https://jsonplaceholder.typicode.com/posts")
-      .then(({data}) => setPosts(data));
-  }, []);
+
+const UseStateExample = () => {
+  const [test, setTest] = useState('initail value');
 
   return (
-    <Container>
-      <GlobalStyle />
-      {posts.map((post, index) => (
-        <Post key={index}>
-        <Title>{post.title}</Title>
-        <Body>{post.body}</Body>
-      </Post>
-      ))}
-    </Container>
-  );
+    <div>
+      <p>{test}</p>
+      <input onChange={(e) => {setTest(e.target.value)}} />
+      
+    </div>
+  )
 }
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0
-  }
-`;
+function App() {
+  return (
+    <div>
+      <UseStateExample />
+      <Name name="doit" color="red"/>
+ 
+    </div>
+    
+  );
+  
+}
 
-const Container = styled.div`
-  min-height: 100vh;
-  padding: 200px 0;
-  display: grid;
-  grid-template-columns: repeat(4, 300px);
-  grid-template-rows: repeat(auto-fit, 300px);
-  grid-auto-rows: 300px;
-  grid-gap: 30px 20px;
-  justify-content: center;
-  background: #55efc4;
-  box-sizing: border-box;
-`;
+function Name({name,color}) {
+  return (
+    <div>
+      <div style = {{color}}>my name is {name}</div>
+    </div>
+    
+  )
+}
 
-const Post = styled.div`
-  border: 1px solid black;
-  border-radius: 20px;
-  background: white;
-  box-shadow: 10px 5px 5px #7f8fa6;
-`;
 
-const Title = styled.div`
-  height: 20%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid black;
-  font-weight: 600;
-`;
-
-const Body = styled.div`
-  height: 80%;
-  padding: 11px;
-  border-radius: 20px;
-`;
 
 export default App;
