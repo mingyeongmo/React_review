@@ -8,8 +8,11 @@ const UseStateExample = () => {
     console.log('test state에 대해서만 호출!');
   },[]); // 첫 렌더링에만 호출
   useEffect(() => {
-    console.log('test2 state에 대해서만 호출!');
-  },[test2]);
+    console.log('첫 렌더링에만!');
+    return () => {
+      console.log('마지막 언마운트 시 호출!');
+    }
+  },[]);
   return (
     <div>
       <p>{test}</p>
@@ -21,12 +24,13 @@ const UseStateExample = () => {
 }
 
 function App() {
+  const [useEffectRender, setUseEffectRender] = useState(true);
+
   return (
-    <div>
-      <UseStateExample />
- 
+    <div className="App">
+      {useEffectRender && <UseStateExample />}
+      <button onClick={() => setUseEffectRender(!useEffectRender)}>마지막 언마운트 호출하기!</button>
     </div>
-    
   );
   
 }
